@@ -1,0 +1,8 @@
+input.empty {
+    width: 40px;
+}
+
+input.populated {
+    width: 40px;
+    background: lightgray;
+}

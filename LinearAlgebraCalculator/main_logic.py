@@ -32,7 +32,7 @@ column_size = 0
 
 @app.route('/')
 def hello_world():
-	return render_template("grid.html")
+	return render_template("grid.html", matrix_info={'is_empty': False})
 
 
 @app.route('/', methods=['POST'])
@@ -41,16 +41,22 @@ def hello_world_post():
 	global column_size
 	if request.method == 'POST':
 		if request.form['action'] == 'submit_dimensions':
+			
 			row_size = int(request.form['row_number'])
 			column_size = int(request.form['column_number'])
-			array_of_inputs = Markup("")
+			
+			array_of_inputs = []
+			temp_array = []
+			
 			for x in range(row_size):
 				for y in range(column_size):
-					array_of_inputs += Markup(
-						"<input required=\"True\" style=\"width:40px;\" type=\"number\" name=\"input_{0}_{1}\">".format(
-							x, y))
-				array_of_inputs += Markup("<br>")
-			return render_template("grid.html", matrix_info=array_of_inputs)
+					temp_array.append("input_{0}_{1}".format(x, y))
+				array_of_inputs.append(temp_array)
+				temp_array = []
+			
+			to_send = {'empty': array_of_inputs, 'is_empty': True, 'is_full': False}
+			return render_template("grid.html", matrix_info=to_send)
+		
 		elif request.form['action'] == 'submit_matrix':
 			initial_matrix = []
 			temp = []
@@ -60,12 +66,7 @@ def hello_world_post():
 				initial_matrix.append(temp)
 				temp = []
 			solved_matrix = (Matrix(initial_matrix).rref())[0].tolist()
-			to_send = Markup("")
-			for x in range(row_size):
-				for y in range(column_size):
-					to_send += Markup("<input required=\"True\" style=\"width:40px;\"")
-					to_send += Markup(" readonly=\"True\" value=\"{2}\" name=\"input_{0}_{1}\">"
-						.format(x, y, solved_matrix[x][y]))
-				to_send += Markup("<br>")
+			to_send = {'solved': solved_matrix, 'is_full': True, 'is_empty': False}
+			foo = to_send['solved']
 			return render_template("grid.html", matrix_info=to_send)
 
