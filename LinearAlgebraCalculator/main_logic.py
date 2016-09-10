@@ -21,11 +21,10 @@
 #
 # Gabriel Sturtevant
 #
-from flask import Flask, render_template, request, Markup
+from LinearAlgebraCalculator import app
+from flask import render_template, request, Markup
 from sympy import Matrix
 
-
-app = Flask(__name__)
 
 row_size = 0
 column_size = 0
@@ -70,6 +69,3 @@ def hello_world_post():
 				to_send += Markup("<br>")
 			return render_template("grid.html", matrix_info=to_send)
 
-
-if __name__ == '__main__':
-	app.run(debug=True)
