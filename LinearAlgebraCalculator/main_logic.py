@@ -26,8 +26,11 @@ from flask import render_template, request, Markup
 from sympy import Matrix
 
 
-row_size = 0
-column_size = 0
+row_size1 = 0
+column_size1 = 0
+row_size2 = 0
+column_size2 = 0
+multiply = False
 
 
 @app.route('/')
@@ -37,36 +40,65 @@ def hello_world():
 
 @app.route('/', methods=['POST'])
 def hello_world_post():
-	global row_size
-	global column_size
+	global row_size1
+	global column_size1
+	global row_size2
+	global column_size2
+	global multiply
 	if request.method == 'POST':
 		if request.form['action'] == 'submit_dimensions':
 			
-			row_size = int(request.form['row_number'])
-			column_size = int(request.form['column_number'])
+			row_size1 = int(request.form['row_number1'])
+			column_size1 = int(request.form['column_number1'])
 			
-			array_of_inputs = []
-			temp_array = []
-			
-			for x in range(row_size):
-				for y in range(column_size):
-					temp_array.append("input_{0}_{1}".format(x, y))
-				array_of_inputs.append(temp_array)
-				temp_array = []
-			
-			to_send = {'empty': array_of_inputs, 'is_empty': True, 'is_full': False}
-			return render_template("grid.html", matrix_info=to_send)
+			array_of_inputs1 = get_array_names(1, row_size1, column_size1)
+			if str(request.form.getlist('Multiply')[0]) == 'on':
+				multiply = True
+				row_size2 = int(request.form['row_number2'])
+				column_size2 = int(request.form['column_number2'])
+				if column_size1 != row_size2:
+					return render_template("grid.html", dimension_mismatch="Dimension mismatch", matrix_info={'is_empty': False})
+				array_of_inputs2 = get_array_names(2, row_size2, column_size2)
+				to_send = {'empty': array_of_inputs1, 'second_array': array_of_inputs2, 'dimension': 2, 'is_empty': True, 'is_full': False}
+				return render_template("grid.html", matrix_info=to_send)
+			else:
+				multiply = False
+				to_send = {'empty': array_of_inputs1, 'is_empty': True, 'is_full': False}
+				return render_template("grid.html", matrix_info=to_send)
 		
 		elif request.form['action'] == 'submit_matrix':
-			initial_matrix = []
+			initial_matrix1 = []
+			initial_matrix2 = []
 			temp = []
-			for x in range(row_size):
-				for y in range(column_size):
-					temp.append(int(request.form['input_{0}_{1}'.format(x, y)]))
-				initial_matrix.append(temp)
+			for x in range(row_size1):
+				for y in range(column_size1):
+					temp.append(int(request.form['input1_{0}_{1}'.format(x, y)]))
+				initial_matrix1.append(temp)
 				temp = []
-			solved_matrix = (Matrix(initial_matrix).rref())[0].tolist()
+			
+			if multiply:
+				for x in range(row_size2):
+					for y in range(column_size2):
+						temp.append(int(request.form['input2_{0}_{1}'.format(x, y)]))
+					initial_matrix2.append(temp)
+					temp = []
+			if not multiply:
+				solved_matrix = (Matrix(initial_matrix1).rref())[0].tolist()
+			else:
+				matrix1 = Matrix(initial_matrix1)
+				matrix2 = Matrix(initial_matrix2)
+				solved_matrix = (matrix1.multiply(matrix2)).tolist()
 			to_send = {'solved': solved_matrix, 'is_full': True, 'is_empty': False}
-			foo = to_send['solved']
 			return render_template("grid.html", matrix_info=to_send)
 
+
+def get_array_names(input_number, x_size, y_size):
+	array_of_inputs = []
+	temp_array = []
+	
+	for x in range(x_size):
+		for y in range(y_size):
+			temp_array.append("input{0}_{1}_{2}".format(input_number, x, y))
+		array_of_inputs.append(temp_array)
+		temp_array = []
+	return array_of_inputs
