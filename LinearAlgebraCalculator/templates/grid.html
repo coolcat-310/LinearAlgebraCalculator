@@ -33,29 +33,38 @@
 <body>
 	<script type="text/javascript">
 		function set_visibility() {
-			if(document.getElementById("input2").style.visibility == "visible")
+			if(document.getElementById("input2").style.visibility == "visible") {
 				document.getElementById("input2").style.visibility = "collapse";
-			else
+				document.getElementById("row_number2").removeAttribute("required");
+				document.getElementById("column_number2").removeAttribute("required");
+			}
+			else {
 				document.getElementById("input2").style.visibility = "visible";
+				document.getElementById("row_number2").setAttribute("required", "True");
+				document.getElementById("column_number2").setAttribute("required", "True");
+			}
 		}
 	</script>
 	<h1>Linear Algebra Reducer</h1>
-	<form action="" method="POST" .>
+	<form action="" method="POST">
 		<h3>Dimensions</h3>
 		<div id="dimension_wrapper">
 			<div id="input1">
-				<input required="True" style="width:25px;" type="number" name="row_number">
+				<input required="True" id="row_number1" class="dimension" type="number" name="row_number1">
 				<strong>X</strong>
-				<input required="True" style="width:25px" type="number" name="column_number">
+				<input required="True" id="column_number1" class="dimension" type="number" name="column_number1">
 			</div>
 			<div id="input2">
-				<input required="True" style="width:25px;" type="number" name="row_number2">
+				<input id="row_number2" class="dimension" type="number" name="row_number2">
 				<strong>X</strong>
-				<input required="True" style="width:25px" type="number" name="column_number2">
+				<input id="column_number2" class="dimension" type="number" name="column_number2">
 			</div>
 		</div>
 		<br>
 		<br>
+		<div class="error_label">
+			{{ dimension_mismatch }}
+		</div>
 		<input type="checkbox" onclick="set_visibility();" class="checkbox" name="Multiply">Multiply
 		<br>
 		<input type="checkbox" class="checkbox" name="Reduce">Reduce
@@ -66,12 +75,27 @@
 
 	<form action="" method="POST">
 		{%- if matrix_info['is_empty'] %}
+			<div id="empty_matrices">
+			<div id="empty_matrix1">
 			{%- for x in matrix_info['empty'] %}
 				{%- for name in x %}
 					<input class="empty" required="True" type="number" name="{{ name }}">
 				{%- endfor %}
-			<br>
+				<br>
 			{%- endfor %}
+			</div>
+			<div id="empty_matrix_multiply">&nbsp;<strong>X</strong>&nbsp;</div>
+			{%- if matrix_info['dimension'] == 2 %}
+				<div id="empty_matrix2">
+				{%- for x in matrix_info['second_array'] %}
+					{%- for name in x %}
+						<input class="empty" required="True" type="number" name="{{ name }}">
+				{%- endfor %}
+				<br>
+			{%- endfor %}
+				</div>
+			{%- endif %}
+			</div>
 			<input type="submit" name="action" value="submit_matrix">
 		{%- elif matrix_info['is_full'] %}
 			{%- for x in matrix_info['solved'] %}
