@@ -1,3 +1,18 @@
+div#dimension_wrapper{
+    width: 100%;
+}
+
+div#input1 {
+    width: 80px;
+    float: left;
+}
+
+div#input2 {
+    margin-left: 10px;
+    float: left;
+    visibility: collapse;
+}
+
 input.empty {
     width: 40px;
 }
