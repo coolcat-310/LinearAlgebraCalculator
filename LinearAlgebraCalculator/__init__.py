@@ -1,11 +1,8 @@
-import sys
-import os
 from flask import Flask
 
-if getattr(sys, 'frozen', False):
-    template_folder = os.path.join(sys._MEIPASS, 'templates')
-    app = Flask(__name__, template_folder=template_folder)
-else:
-    app = Flask(__name__)
+app = Flask(__name__)
+
+app.jinja_env.trim_blocks = True
+app.jinja_env.lstrip_blocks = True
     
 import LinearAlgebraCalculator.main_logic
