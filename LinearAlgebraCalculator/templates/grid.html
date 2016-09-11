@@ -25,6 +25,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<link rel="stylesheet" type="text/css" href="../static/global.css">
 	<meta charset="UTF-8">
 	<title>Title</title>
 </head>
@@ -40,9 +41,23 @@
 	<h2>Matrix</h2>
 
 	<form action="" method="POST">
-		{{ matrix_info }}
+		{%- if matrix_info['is_empty'] %}
+			{%- for x in matrix_info['empty'] %}
+				{%- for name in x %}
+					<input class="empty" required="True" type="number" name="{{ name }}">
+				{%- endfor %}
+			<br>
+			{%- endfor %}
+			<input type="submit" name="action" value="submit_matrix">
+		{%- elif matrix_info['is_full'] %}
+			{%- for x in matrix_info['solved'] %}
+				{%- for value in x %}
+					<input class="populated" readonly="True" value="{{ value }}">
+				{%- endfor %}
+			<br>
+			{%- endfor %}
+		{%- endif %}
 		<br>
-		<input type="submit" name="action" value="submit_matrix">
 	</form>
 </body>
 </html>
