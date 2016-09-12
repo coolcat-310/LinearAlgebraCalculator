@@ -26,25 +26,12 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
 	<link rel="stylesheet" type="text/css" href="../static/global.css">
+    <script src="../static/functions.js"></script>
 	<meta charset="UTF-8">
 	<title>Title</title>
 
 </head>
 <body>
-	<script type="text/javascript">
-		function set_visibility() {
-			if(document.getElementById("input2").style.visibility == "visible") {
-				document.getElementById("input2").style.visibility = "collapse";
-				document.getElementById("row_number2").removeAttribute("required");
-				document.getElementById("column_number2").removeAttribute("required");
-			}
-			else {
-				document.getElementById("input2").style.visibility = "visible";
-				document.getElementById("row_number2").setAttribute("required", "True");
-				document.getElementById("column_number2").setAttribute("required", "True");
-			}
-		}
-	</script>
 	<h1>Linear Algebra Reducer</h1>
 	<form action="" method="POST">
 		<h3>Dimensions</h3>
