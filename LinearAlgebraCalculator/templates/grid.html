@@ -25,6 +25,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
+    <meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="../static/global.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -34,12 +35,11 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
     </script>
     <script src="../static/functions.js"></script>
-	<meta charset="UTF-8">
 	<title>Title</title>
 </head>
 <body>
 	<h1>Linear Algebra Reducer</h1>
-	<action="" method="POST">
+	<form action="" method="POST">
 		<h3>Dimensions</h3>
 		<div id="dimension_wrapper">
 			<div id="input1">
@@ -64,10 +64,10 @@
 		<br>
 		<input type="submit" name="action" value="submit_dimensions">
 	</form>
-	<h2>Matrix</h2>
 
 	<form action="" method="POST">
 		{%- if matrix_info['is_empty'] %}
+            <h2>Matrix</h2>
 			<div class="empty_matrices" id="empty_matrices">
 			<div class="empty_matrix1" id="empty_matrix1">
 			{%- for x in matrix_info['empty'] %}
@@ -77,8 +77,8 @@
 				<br>
 			{%- endfor %}
 			</div>
-			<div class="empty_matrix_multiply" id="empty_matrix_multiply">&nbsp;<strong>X</strong>&nbsp;</div>
 			{%- if matrix_info['dimension'] == 2 %}
+                <div class="empty_matrix_multiply" id="empty_matrix_multiply">&nbsp;<strong>X</strong>&nbsp;</div>
 				<div class="empty_matrix2" id="empty_matrix2">
 				{%- for x in matrix_info['second_array'] %}
 					{%- for name in x %}
@@ -93,6 +93,7 @@
 			    <input type="submit" name="action" value="submit_matrix">
             </div>
 		{%- elif matrix_info['is_full'] %}
+            <h2>Solved Matrix</h2>
 			{%- for x in matrix_info['solved'] %}
 				{%- for value in x %}
 					<input class="populated" readonly="True" value="{{ value }}">
