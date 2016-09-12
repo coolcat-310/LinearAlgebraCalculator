@@ -1,22 +1,27 @@
 div#dimension_wrapper{
     width: 100%;
+    float: left;
 }
 
-div#empty_matrices {
+div.empty_matrices {
     width: 100%;
+    display: flex;
 }
 
-div#empty_matrix1 {
+div.empty_matrix1 {
     width: auto;
     float: left;
 }
 
-div#empty_matrix_multiply{
+div.empty_matrix_multiply{
     width: auto;
     float: left;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
-div#empty_matrix2 {
+div.empty_matrix2 {
     width: auto;
     float: left;
 }
@@ -36,15 +41,24 @@ div#input2 {
     visibility: collapse;
 }
 
+div#submit_button {
+    width: 100%;
+    clear: both;
+    padding-top: 5px;
+}
+
 input.dimension {
     width: 25px;
 }
 
 input.empty {
     width: 40px;
+    padding-bottom: 0px;
+    margin-bottom: 3px;
 }
 
 input.populated {
     width: 40px;
+    padding-bottom: 0px;
     background: lightgray;
 }
