@@ -32,25 +32,10 @@
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
-
     </script>
-    <script type="text/javascript">
-		function set_visibility() {
-			if(document.getElementById("input2").style.visibility == "visible") {
-				document.getElementById("input2").style.visibility = "collapse";
-				document.getElementById("row_number2").removeAttribute("required");
-				document.getElementById("column_number2").removeAttribute("required");
-			}
-			else {
-				document.getElementById("input2").style.visibility = "visible";
-				document.getElementById("row_number2").setAttribute("required", "True");
-				document.getElementById("column_number2").setAttribute("required", "True");
-			}
-		}
-	</script>
+    <script src="../static/functions.js"></script>
 	<meta charset="UTF-8">
 	<title>Title</title>
-
 </head>
 <body>
 	<h1>Linear Algebra Reducer</h1>
