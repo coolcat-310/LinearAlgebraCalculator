@@ -1,0 +1,111 @@
+<!--
+# LinearAlgebraCalculator
+# Copyright (C) 2016, Gabriel Sturtevant <Gabriel@GabrielSturtevant.com>
+#
+# This file is part of LinearAlgebraCalculator.
+#
+# LinearAlgebraCalculator is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# LinearAlgebraCalculator is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with LinearAlgebraCalculator.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Contributor(s):
+#
+# Gabriel Sturtevant
+#
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+	<link rel="stylesheet" type="text/css" href="../static/global.css">
+	<meta charset="UTF-8">
+	<title>Title</title>
+
+</head>
+<body>
+	<script type="text/javascript">
+		function set_visibility() {
+			if(document.getElementById("input2").style.visibility == "visible") {
+				document.getElementById("input2").style.visibility = "collapse";
+				document.getElementById("row_number2").removeAttribute("required");
+				document.getElementById("column_number2").removeAttribute("required");
+			}
+			else {
+				document.getElementById("input2").style.visibility = "visible";
+				document.getElementById("row_number2").setAttribute("required", "True");
+				document.getElementById("column_number2").setAttribute("required", "True");
+			}
+		}
+	</script>
+	<h1>Linear Algebra Reducer</h1>
+	<form action="" method="POST">
+		<h3>Dimensions</h3>
+		<div id="dimension_wrapper">
+			<div id="input1">
+				<input required="True" id="row_number1" class="dimension" type="number" name="row_number1">
+				<strong>X</strong>
+				<input required="True" id="column_number1" class="dimension" type="number" name="column_number1">
+			</div>
+			<div id="input2">
+				<input id="row_number2" class="dimension" type="number" name="row_number2">
+				<strong>X</strong>
+				<input id="column_number2" class="dimension" type="number" name="column_number2">
+			</div>
+		</div>
+		<br>
+		<br>
+		<div class="error_label">
+			{{ dimension_mismatch }}
+		</div>
+		<input type="checkbox" onclick="set_visibility();" class="checkbox" name="Multiply">Multiply
+		<br>
+		<input type="checkbox" class="checkbox" name="Reduce">Reduce
+		<br>
+		<input type="submit" name="action" value="submit_dimensions">
+	</form>
+	<h2>Matrix</h2>
+
+	<form action="" method="POST">
+		{%- if matrix_info['is_empty'] %}
+			<div id="empty_matrices">
+			<div id="empty_matrix1">
+			{%- for x in matrix_info['empty'] %}
+				{%- for name in x %}
+					<input class="empty" required="True" type="number" name="{{ name }}">
+				{%- endfor %}
+				<br>
+			{%- endfor %}
+			</div>
+			<div id="empty_matrix_multiply">&nbsp;<strong>X</strong>&nbsp;</div>
+			{%- if matrix_info['dimension'] == 2 %}
+				<div id="empty_matrix2">
+				{%- for x in matrix_info['second_array'] %}
+					{%- for name in x %}
+						<input class="empty" required="True" type="number" name="{{ name }}">
+				{%- endfor %}
+				<br>
+			{%- endfor %}
+				</div>
+			{%- endif %}
+			</div>
+			<input type="submit" name="action" value="submit_matrix">
+		{%- elif matrix_info['is_full'] %}
+			{%- for x in matrix_info['solved'] %}
+				{%- for value in x %}
+					<input class="populated" readonly="True" value="{{ value }}">
+				{%- endfor %}
+			<br>
+			{%- endfor %}
+		{%- endif %}
+		<br>
+	</form>
+</body>
+</html>

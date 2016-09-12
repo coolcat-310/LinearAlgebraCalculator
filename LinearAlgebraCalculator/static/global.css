@@ -1,0 +1,50 @@
+div#dimension_wrapper{
+    width: 100%;
+}
+
+div#empty_matrices {
+    width: 100%;
+}
+
+div#empty_matrix1 {
+    width: auto;
+    float: left;
+}
+
+div#empty_matrix_multiply{
+    width: auto;
+    float: left;
+}
+
+div#empty_matrix2 {
+    width: auto;
+    float: left;
+}
+
+div.error_label {
+    color: red;
+}
+
+div#input1 {
+    width: 80px;
+    float: left;
+}
+
+div#input2 {
+    margin-left: 10px;
+    float: left;
+    visibility: collapse;
+}
+
+input.dimension {
+    width: 25px;
+}
+
+input.empty {
+    width: 40px;
+}
+
+input.populated {
+    width: 40px;
+    background: lightgray;
+}
