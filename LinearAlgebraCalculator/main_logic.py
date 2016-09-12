@@ -52,7 +52,7 @@ def hello_world_post():
 			column_size1 = int(request.form['column_number1'])
 			
 			array_of_inputs1 = get_array_names(1, row_size1, column_size1)
-			if str(request.form.getlist('Multiply')[0]) == 'on':
+			if request.form.getlist('Multiply'):
 				multiply = True
 				row_size2 = int(request.form['row_number2'])
 				column_size2 = int(request.form['column_number2'])
